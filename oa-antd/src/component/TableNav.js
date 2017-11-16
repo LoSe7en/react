@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-
-import MyForm from './MyForm';
-
 import { Modal, Button } from 'antd';
+import MyForm from './MyForm';
 
 class TableNav extends Component {
 
@@ -22,7 +20,9 @@ class TableNav extends Component {
             modalTitle: '修改',
             visible: true
         }, () => {
-            console.log(this.refs)
+            let user = Object.assign({}, this.props.peopleChooseObj[0]);
+            console.log(user);
+            console.log(this.refs.myForm)
         });
     };
     handleDel = () => {
@@ -49,11 +49,11 @@ class TableNav extends Component {
             }
         })
     }
-    handleCancel = () => {
+    handleCancel = (e) => {
         this.setState({
             visible: false,
         });
-        //this.refs.myForm.resetFields();  //重置表单内容
+        this.refs.myForm.resetFields();  //重置表单内容
     }
     render() {
         return (
@@ -63,14 +63,17 @@ class TableNav extends Component {
                 <Button onClick={this.handleDel} disabled={this.props.peopleChooseIndex.length>0? false:true}>删除</Button>{/*bind第一个参数默认是该函数中的this，无需改变this时可传null*/}
 
                 {/*modal*/}
-                <Modal ref="myForm" id="components-form-demo-normal-login"
-                    title={this.state.modalTitle}
-                    visible={this.state.visible}
-                    onOk={this.handleOk}
-                    onCancel={this.handleCancel}
-                >
-                    <MyForm />
-                </Modal>
+                <div id="components-form-demo-normal-login">
+                    <Modal
+                        title={this.state.modalTitle}
+                        visible={this.state.visible}
+                        onOk={this.handleOk}
+                        onCancel={this.handleCancel}
+                    >
+                        <MyForm ref="myForm"/>
+                    </Modal>
+                </div>
+
             </div>
         )
     }

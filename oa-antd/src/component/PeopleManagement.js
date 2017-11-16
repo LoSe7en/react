@@ -26,16 +26,16 @@ class PeopleManagement extends Component {
     //删除方法，由于此处的删除按钮与列表数据对象存储在两个兄弟关系组件中，此处可以用共同的父组件来作为传输桥梁
     delPeopleFun = () => {
         //当父组件的方法被子组件调用时，利用父组件再通知另外的子组件
-        this.refs.list.delPeople(this.state.peopleChooseIndex);  //鉴于没有后台，此处只是作为演示
+        this.refs.list.delPeople(this.state.peopleChooseIndex[0]);  //鉴于没有后台，暂时只能一个一个的删除
     }
 
 
     render() {
-        const { peopleChooseIndex, peopleChooseObj} = this.state;
+        const {people, modalTitle, peopleChooseIndex, peopleChooseObj, delPeopleFun} = this.state;
         return (
             <div>
-                <TableNav delPeopleFun={this.delPeopleFun} peopleChooseObj={peopleChooseObj} peopleChooseIndex={peopleChooseIndex} handleSetBtn={this.getPeople}/>
-                <PeopleList ref="list" getChooseArr={this.getChooseArr}/>
+                <TableNav delPeopleFun={delPeopleFun} peopleChooseObj={peopleChooseObj} peopleChooseIndex={peopleChooseIndex} handleSetBtn={this.getPeople}/>
+                <PeopleList ref="list" modalTitle={modalTitle} people={people} getChooseArr={this.getChooseArr}/>
             </div>
         );
     }
