@@ -6,7 +6,8 @@ class TableNav extends Component {
 
     state = {
         modalTitle: '新增',
-        visible: false
+        visible: false,
+        myForm: ''
     };
 
     handleAdd = () => {
@@ -20,9 +21,14 @@ class TableNav extends Component {
             modalTitle: '修改',
             visible: true
         }, () => {
-            let user = Object.assign({}, this.props.peopleChooseObj[0]);
-            console.log(user);
-            console.log(this.refs.myForm)
+            if(this.state.myForm) {
+                let user = Object.assign({}, this.props.peopleChooseObj[0]);
+                this.state.myForm.setFieldsValue({
+                    Name: user.name,
+                    Age: user.age,
+                    Address: user.address
+                })
+            }
         });
     };
     handleDel = () => {
@@ -53,7 +59,21 @@ class TableNav extends Component {
         this.setState({
             visible: false,
         });
-        this.refs.myForm.resetFields();  //重置表单内容
+        this.state.myForm.resetFields();  //重置表单内容
+    }
+
+    //当ref被挂载时调用
+    //此时基于antd的modal隐藏机制，如果首次visible为false，则该元素不会被渲染，
+    //所以只有当modal第一次显示时，该form组件才会被挂载。
+    //setState的回调函数中再次调用修改方法，是为了防止网页加载完成后，直接点击修改按钮，弹框不会赋值的问题。
+    refForm = (dom) => {
+        this.setState({
+            myForm: dom
+        }, () => {
+            if(this.state.visible && this.state.modalTitle === '修改') {
+                this.handleMod();
+            }
+        })
     }
     render() {
         return (
@@ -70,10 +90,9 @@ class TableNav extends Component {
                         onOk={this.handleOk}
                         onCancel={this.handleCancel}
                     >
-                        <MyForm ref="myForm"/>
+                        <MyForm ref={this.refForm}/>
                     </Modal>
                 </div>
-
             </div>
         )
     }

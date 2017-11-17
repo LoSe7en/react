@@ -25,8 +25,8 @@ class PeopleManagement extends Component {
 
     //删除方法，由于此处的删除按钮与列表数据对象存储在两个兄弟关系组件中，此处可以用共同的父组件来作为传输桥梁
     delPeopleFun = () => {
-        //当父组件的方法被子组件调用时，利用父组件再通知另外的子组件
-        this.refs.list.delPeople(this.state.peopleChooseIndex[0]);  //鉴于没有后台，暂时只能一个一个的删除
+        //请求后台，调用删除函数
+        alert('删除成功');
     }
 
 
