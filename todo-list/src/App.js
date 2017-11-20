@@ -9,11 +9,6 @@ import TodoFooter from './components/TodoFooter';
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import './css/todo-list.css';
 
-var list = [
-    {text: 'aaaa'},
-    {text: 'bbbb'}
-];
-
 class App extends Component {
 
     //创建状态机，为了便于管理组件间的值传输，将主要state属性写在共同父组件中
@@ -33,11 +28,10 @@ class App extends Component {
         })
     };
 
-
     //保存数据到本地
     setLocalData = (mission) => {
         let data = this.state.data;
-        data.push(mission);
+        data.unshift(mission);
         this.setState({
             data
         }, () => {
@@ -54,16 +48,20 @@ class App extends Component {
         this.setLocalData(mission)
     };
 
+    //完成任务
+    componentMission = () => {
+
+    };
+
     render() {
         let {data} = this.state;
-        console.log(this.state.data);
-        console.log(list);
         return (
             <div className="container-fluid">
                 <TodoHeader />
                 <TodoMain
                     addMission={this.addMission}
-                    data={list}
+                    componentMission={this.componentMission}
+                    data={data}
                 />
                 <TodoFooter />
             </div>

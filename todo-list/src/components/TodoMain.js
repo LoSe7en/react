@@ -8,8 +8,13 @@ class TodoMain extends Component {
 
     saveMission = (e) => {
         if(e.keyCode === 13) {
-            this.props.addMission(e.target.value)
+            this.props.addMission(e.target.value);
+            e.target.value = '';
         }
+    };
+
+    componentMission = (e) => {
+        this.props.componentMission();
     };
 
     componentWillReceiveProps = () => {
@@ -32,7 +37,6 @@ class TodoMain extends Component {
                         </tbody>
                     </table>
                 </div>
-                {this.props.data}
             </div>
         )
     };
@@ -40,9 +44,9 @@ class TodoMain extends Component {
 
 class UserItem extends Component {
     render() {
-        var user = this.props.data;
+        let user = this.props.data;
         return (
-            <tr>
+            <tr onDoubleClick={this.componentMission}>
                 <td><input type="checkbox"/></td>
                 <td>{user.text}</td>
                 <td>
