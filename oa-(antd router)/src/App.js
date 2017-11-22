@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 /*路由*/
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 /*组件（规定大写字母开头，并写在antd上方）*/
 import LeftSider from './component/LeftSider';
 import PeopleManagement from './component/PeopleManagement';
@@ -40,9 +40,11 @@ class App extends Component {
                         </Header>
                         <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
                             {/*设置路由显示规则，当hash值满足path时，显示component*/}
-                            <Route path="/peopleManagement" component={PeopleManagement} />
-                            <Route path="/workLog" component={WorkLog} />
-                            <Redirect path="/" to="/peopleManagement" />  {/*路由重定向*/}
+                            <Switch>
+                                <Route path="/peopleManagement" component={PeopleManagement} />
+                                <Route path="/workLog" component={WorkLog} />
+                                <Redirect path="/" to="/peopleManagement" />  {/*路由重定向*/}
+                            </Switch>
                         </Content>
                     </Layout>
                 </Layout>
